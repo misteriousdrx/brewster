@@ -1,0 +1,57 @@
+<ion-header>
+	<ion-navbar color="primary">
+		<ion-title>
+			Brewster
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-card>
+		<ion-card-header>
+			<b>Status do Controlador</b>
+		</ion-card-header>
+
+		<ion-card-content color="{{ cor }}">
+			<b>{{ status }}</b>
+		</ion-card-content>
+	</ion-card>
+
+	<ion-card>
+		<ion-card-header>
+			<b>Temperaturas Definidas</b>
+		</ion-card-header>
+		
+		<ion-card-content>
+			Temperatura ideal: <b>{{ tempIdeal | toTemperature }}ºC</b> <br />
+			Temperatura mínima: <b>{{ tempMinima | toTemperature }}ºC</b> <br />
+			Temperatura máxima: <b>{{ tempMaxima | toTemperature }}ºC</b>
+		</ion-card-content>
+	</ion-card>
+	
+	<!-- Chart Element -->
+	<ion-card>
+		<ion-card-header>
+			<b>Temperaturas Hoje</b>
+		</ion-card-header>
+
+		<ion-card-content>
+			<canvas #hojeCanvas></canvas>
+		</ion-card-content>
+	</ion-card>
+	<!-- Chart Element -->
+	
+	<!-- Chart Element -->
+	<ion-card>
+		<ion-card-header>
+			<b>Histórico</b>
+		</ion-card-header>
+
+		<ion-card-content>
+			<canvas #historicoCanvas></canvas>
+		</ion-card-content>
+	</ion-card>
+	<!-- Chart Element -->
+
+
+</ion-content>

@@ -1,0 +1,33 @@
+<ion-header>
+	<ion-navbar color="primary">
+		<ion-title>
+			Brewster
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+
+	<!-- ------------------------------------------------------------------- -->
+	<ion-list>
+		<ion-item>
+			<ion-label floating>Temperatura Ideal (ºC)</ion-label>
+			<ion-input type="number" [(ngModel)]="tempIdeal" ></ion-input>
+		</ion-item>
+		
+		<ion-item>
+			<ion-label floating>Temperatura Máxima (ºC)</ion-label>
+			<ion-input type="number"[(ngModel)]="tempMaxima" ></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label floating>Temperatura Mínima (ºC)</ion-label>
+			<ion-input type="number"[(ngModel)]="tempMinima" ></ion-input>
+		</ion-item>
+	</ion-list>
+	<!-- ------------------------------------------------------------------- -->
+			
+	<div padding>
+		<button ion-button full color="secondary">Definir</button>
+	</div>
+
+</ion-content>

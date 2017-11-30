@@ -1,14 +1,50 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
+	<ion-navbar color="primary">
+		<ion-title>
+			Brewster
+		</ion-title>
+	</ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+	<ion-card>
+		<ion-card-header>
+			Controlador 01
+		</ion-card-header>
+		
+		<ion-list>
+			<button ion-item (click)="goToConsTemp()">
+				<ion-icon name="thermometer"></ion-icon>
+				Monitorar Temperatura
+			</button>
+			
+			<button ion-item (click)="goToDefTemp()">
+				<ion-icon name="snow"></ion-icon>
+				Definir Temperaturas
+			</button>
+
+			<button ion-item (click)="goToConfCont()">
+				<ion-icon name="settings"></ion-icon>
+				Configurar Controlador
+			</button>
+		</ion-list>
+	</ion-card>
+	
+	<ion-card>
+		<ion-card-header>Configurações</ion-card-header>
+
+		<ion-list>
+			<button ion-item>
+				<ion-icon name="person"></ion-icon>
+				Perfis de Temperatura
+			</button>
+			
+			<button ion-item>
+				<ion-icon name="add"></ion-icon>
+				Adicionar Controlador
+			</button>
+
+
+		</ion-list>
+	</ion-card>
 </ion-content>
