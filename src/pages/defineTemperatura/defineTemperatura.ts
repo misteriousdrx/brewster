@@ -15,11 +15,12 @@ export class DefineTemperaturaPage {
 
 	constructor(public navCtrl: NavController, private httpClient: HttpClient) {
 		
-		this.httpClient.get('http://localhost:3000/controlador/1/temperatura')
+		this.httpClient.get('http://localhost:3000/controlador/1/temperaturas')
 		.subscribe(data => {
-			this.tempIdeal = data.ideal;
-			this.tempMinima = data.minima;
-			this.tempMaxima = data.maxima;
+			console.log(data['ideal']); 
+			this.tempIdeal = data['ideal'];
+			this.tempMinima = data['minima'];
+			this.tempMaxima = data['maxima'];
 		}, error => {
 			console.log(error);
 		})
