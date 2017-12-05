@@ -23,7 +23,7 @@ export class DefineTemperaturaPage {
 			this.tempMaxima = data['maxima'];
 		}, error => {
 			console.log(error);
-		})
+		});
 
 	}
 

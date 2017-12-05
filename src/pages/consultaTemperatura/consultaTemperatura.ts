@@ -1,5 +1,6 @@
 import { Component, ViewChild  } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { HttpClient } from '@angular/common/http';
 
 import { Chart } from 'chart.js';
 
@@ -17,27 +18,34 @@ export class ConsultaTemperaturaPage {
 	hojeChart: any;
     historicoChart: any;
     
-    tempIdeal : number;
-    tempMaxima : number;
-    tempMinima : number;
+    tempIdeal : number = 0;
+    tempMaxima : number = 0;
+    tempMinima : number = 0;
 
     status : string;
     cor : string;
 
-	constructor(public navCtrl: NavController) {
-        this.tempIdeal = 20;
-        this.tempMaxima = 22;
-        this.tempMinima = 18;
+    horasHoje : Array<string>;
+    tempHoje : Array<number>;
 
-        this.status = 'Online';
-        this.cor = 'danger'
+    datasHist : Array<string>;
+    tempMinHist : Array<number>;
+    tempMaxHist : Array<number>;
+
+    urlBase : string = 'http://localhost:3000';
+
+	constructor(public navCtrl: NavController, private httpClient: HttpClient) {
+        this.getStatus();
+        this.getTemperaturas();
+        this.getTemperaturasHoje();
+        this.getTemperaturasHistorico();
 	}
 
-	ionViewDidLoad(){
+	MontaChartHoje(){
 		this.hojeChart = new Chart(this.hojeCanvas.nativeElement, {
 			type: 'line',
             data: {
-                labels: ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00"],
+                labels: this.horasHoje,
                 datasets: [
                     {
                         label: "Temperatura",
@@ -58,13 +66,15 @@ export class ConsultaTemperaturaPage {
                         pointHoverBorderWidth: 2,
                         pointRadius: 3,
                         pointHitRadius: 10,
-                        data: [28, 28.5, 29, 30, 30.5, 30, 31],
+                        data: this.tempHoje,
                         spanGaps: false,
                     }
                 ]
             }
         });
-        
+    };
+
+    MontaChartHistorico(){
         this.historicoChart = new Chart(this.historicoCanvas.nativeElement, {
 			type: 'line',
             data: {
@@ -117,6 +127,68 @@ export class ConsultaTemperaturaPage {
                 ]
             }
 		});
-	}
+    }
+    
+    getStatus(){
+        this.httpClient.get(this.urlBase + '/controlador/:id/status')
+        .subscribe(data => {
+            this.status = data['status'];
+            this.cor = (this.status == 'Online') ? 'secondary' : 'danger';
+        }, error => {
+            // mensagem de erro
+        });
+    }
+
+    getTemperaturas(){
+        this.httpClient.get(this.urlBase + '/controlador/:id/temperaturas')
+        .subscribe(data => {
+            this.tempIdeal = Number(data['ideal']);
+            this.tempMinima = Number(data['minima']);
+            this.tempMaxima = Number(data['maxima']);
+        }, error => {
+            // mensagem de erro
+        });
+    }
+
+    getTemperaturasHoje(){
+        this.httpClient.get(this.urlBase + '/controlador/:id/temperaturas/hoje')
+        .subscribe(data => {
+            let lista = <Array<Object>> data;
+
+            this.horasHoje = new Array<string>();
+            this.tempHoje = new Array<number>();
+
+            lista.forEach(report => {
+                this.horasHoje.push(report['hora']);
+                this.tempHoje.push(report['temperatura']);
+            });
+
+            this.MontaChartHoje();
+        }, error => {
+            // Mensagem de erro
+        });
+    }
+
+    getTemperaturasHistorico(){
+        this.httpClient.get(this.urlBase + '/controlador/:id/temperaturas/historico')
+        .subscribe(data => {
+            let lista = <Array<Object>> data;
+
+            this.datasHist = new Array<string>();
+            this.tempMinHist = new Array<number>();
+            this.tempMaxHist = new Array<number>();
+
+            lista.forEach(report => {
+                this.datasHist.push(report['data']);
+                this.tempMinHist.push(report['minima']);
+                this.tempMaxHist.push(report['maxima']);
+            });
+
+            this.MontaChartHistorico();
+
+        }, error => {
+            // Mensagem de erro
+        });
+    }
 
 }
