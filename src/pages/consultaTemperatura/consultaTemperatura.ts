@@ -18,6 +18,7 @@ export class ConsultaTemperaturaPage {
 	hojeChart: any;
     historicoChart: any;
     
+    tempAtual : number = 0;
     tempIdeal : number = 0;
     tempMaxima : number = 0;
     tempMinima : number = 0;
@@ -142,6 +143,7 @@ export class ConsultaTemperaturaPage {
     getTemperaturas(){
         this.httpClient.get(this.urlBase + '/controlador/:id/temperaturas')
         .subscribe(data => {
+            this.tempAtual = Number(data['atual']);
             this.tempIdeal = Number(data['ideal']);
             this.tempMinima = Number(data['minima']);
             this.tempMaxima = Number(data['maxima']);
